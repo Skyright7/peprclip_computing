@@ -141,5 +141,3 @@ dmypy.json
 cython_debug/
 
 /.idea
-
-model_weight/

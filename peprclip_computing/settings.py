@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'model_computing',
+    'generate_by_gaussian',
 ]
 
 MIDDLEWARE = [

@@ -287,7 +287,8 @@ def do_clip(target_seq,target_name, generated_peptides_path,peps_per_target):
     model, alphabet = esm.pretrained.esm2_t33_650M_UR50D()
     batch_converter = alphabet.get_batch_converter()
     model.eval()  # disables dropout for deterministic results
-    model.cuda()  # push model to gpu
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model.model.to(device)
     candidate_peptide_dict = peptide_encoding_preparation(generated_peptides_path,model, alphabet,batch_converter)
     all_candidate_peptides = list(candidate_peptide_dict.keys())
     # 加载模型参数

@@ -57,7 +57,8 @@ def generate_pep_dict_poisson(base_file_path,num_base_peps,num_peps_per_base,min
     model, alphabet = esm.pretrained.esm2_t33_650M_UR50D()
     batch_converter = alphabet.get_batch_converter()
     model.eval()
-    model.cuda() #如果没GPU就不能cuda，这行删掉
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model.model.to(device)
     # -- 生成算法部分 --
     # 先依照多肽设置的长短范围，将符合这个长度范围的能用作sample的数据从原库中筛出
     base_peptides = sample_df.loc[(sample_df['pep_len'] <= max_length) & (sample_df['pep_len'] >= min_length)].pep_seq.to_list()
