@@ -47,7 +47,7 @@ class targetList_viewset(viewsets.ModelViewSet):
         target_seq = target.target_seq
         num_per_target = target.num_per_target
         out_json = out_computing_script(target_name, target_seq, './100k_denovo_for_FcRn.pkl',
-                                        './pepprclip_2023-10-12.ckpt', num_per_target)
+                                        './model_weight/clip/canonical_pepprclip_4-22-23.ckpt', num_per_target)
         target.output_json = out_json
         target.save()
         return Response({'status': 'out_json updated'})
