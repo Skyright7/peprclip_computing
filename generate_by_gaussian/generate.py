@@ -13,6 +13,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='generating model of Gaussian version.')
 
+parser.add_argument('-task_name',type=str, required=True)
 parser.add_argument('-data_path',type=str, required=True)
 parser.add_argument('-num_base_peps',type=int, required=True)
 parser.add_argument('-num_peps_per_base',type=int, required=True)
@@ -26,6 +27,7 @@ parser.add_argument('-output_path',type=str, required=True)
 args = parser.parse_args()
 
 # 主要参数
+task_name = args.task_name
 base_file_path = args.data_path
 num_base_peps = args.num_base_peps
 num_peps_per_base = args.num_peps_per_base
@@ -90,7 +92,7 @@ def generate_pep_dict(base_file_path,num_base_peps,num_peps_per_base,min_length,
 
 out_list = generate_pep_dict(base_file_path, num_base_peps, num_peps_per_base, min_length, max_length, sample_variances)
 df = pd.DataFrame(out_list,columns=['generated_peptides'])
-df.to_csv(output_path)
+df.to_csv(f'{output_path}/{task_name}.csv')
 
 
 # if __name__ == '__main__':
