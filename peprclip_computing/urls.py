@@ -19,10 +19,12 @@ from django.urls import include
 from rest_framework.routers import DefaultRouter
 from model_computing.views import targetList_viewset
 from generate_by_gaussian.views import task_List_viewset
+from filter_by_clip.views import Clip_List_viewset
 
 router = DefaultRouter()
 router.register(r'model_computing', targetList_viewset)
 router.register(r'generate_by_gaussian', task_List_viewset)
+router.register(r'filter_by_clip', Clip_List_viewset)
 
 urlpatterns = [
     path('api/', include(router.urls)),

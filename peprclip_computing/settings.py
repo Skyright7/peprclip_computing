@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'model_computing',
     'generate_by_gaussian',
+    'filter_by_clip',
 ]
 
 MIDDLEWARE = [
