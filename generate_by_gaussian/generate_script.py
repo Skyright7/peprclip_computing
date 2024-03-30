@@ -14,10 +14,10 @@ def generate_script(task_name,base_file_path,num_base_peps,num_peps_per_base,min
     model, alphabet = esm.pretrained.esm2_t33_650M_UR50D()
     batch_converter = alphabet.get_batch_converter()
     model.eval()
+    model.cuda()
     do_have_GPU = torch.cuda.is_available()
     if do_have_GPU:
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        model.to(device)
+        model.cuda()
     # -- 生成算法部分 --
     # 先依照多肽设置的长短范围，将符合这个长度范围的能用作sample的数据从原库中筛出
     base_peptides = sample_df.loc[(sample_df['pep_len'] <= max_length) & (sample_df['pep_len'] >= min_length)].pep_seq.to_list()
@@ -32,7 +32,10 @@ def generate_script(task_name,base_file_path,num_base_peps,num_peps_per_base,min
         batch_lens = (batch_tokens != alphabet.padding_idx).sum(1)
         with torch.no_grad():
             results = model(batch_tokens, repr_layers=[33], return_contacts=False)
-        token_representations = results["representations"][33].cpu()
+        if do_have_GPU:
+            token_representations = results["representations"][33].cpu()
+        else:
+            token_representations = results["representations"][33]
         del batch_tokens
         num_samples_per_base = int(int(n / num_base_peps) / len(sample_variances))
         for i in sample_variances:
