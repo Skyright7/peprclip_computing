@@ -14,8 +14,8 @@ def generate_script(task_name,base_file_path,num_base_peps,num_peps_per_base,min
     model, alphabet = esm.pretrained.esm2_t33_650M_UR50D()
     batch_converter = alphabet.get_batch_converter()
     model.eval()
-    model.cuda()
     do_have_GPU = torch.cuda.is_available()
+    # do_have_GPU = False
     if do_have_GPU:
         model.cuda()
     # -- 生成算法部分 --
@@ -29,7 +29,7 @@ def generate_script(task_name,base_file_path,num_base_peps,num_peps_per_base,min
         batch_labels, batch_strs, batch_tokens = batch_converter([("target_seq", target_seq)])
         if do_have_GPU:
             batch_tokens = batch_tokens.cuda()
-        batch_lens = (batch_tokens != alphabet.padding_idx).sum(1)
+        # batch_lens = (batch_tokens != alphabet.padding_idx).sum(1)
         with torch.no_grad():
             results = model(batch_tokens, repr_layers=[33], return_contacts=False)
         if do_have_GPU:
@@ -44,7 +44,10 @@ def generate_script(task_name,base_file_path,num_base_peps,num_peps_per_base,min
                     token_representations.shape) * i * token_representations.var()
                 aa_toks = list("ARNDCEQGHILKMFPSTWYV")
                 aa_idxs = [alphabet.get_idx(aa) for aa in aa_toks]
-                aa_logits = model.lm_head(gen_pep.cuda())[:, :, aa_idxs]
+                if do_have_GPU:
+                    aa_logits = model.lm_head(gen_pep.cuda())[:, :, aa_idxs]
+                else:
+                    aa_logits = model.lm_head(gen_pep)[:, :, aa_idxs]
                 predictions = torch.argmax(aa_logits, dim=2).tolist()[0]
                 generated_pep_seq = "".join([aa_toks[i] for i in predictions])
                 generated_peptides.append(generated_pep_seq[1:-1])
