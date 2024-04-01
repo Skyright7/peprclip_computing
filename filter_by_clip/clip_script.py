@@ -292,7 +292,7 @@ def do_clip(target_seq,target_name, generated_peptides_path,peps_per_target,outp
     batch_converter = alphabet.get_batch_converter()
     model.eval()  # disables dropout for deterministic results
     do_have_GPU = torch.cuda.is_available()
-    # do_have_GPU = False
+    do_have_GPU = False
     if do_have_GPU:
         model.cuda()
     candidate_peptide_dict = peptide_encoding_preparation(generated_peptides_path,model, alphabet,batch_converter,do_have_GPU)
