@@ -15,7 +15,6 @@ def generate_script(task_name,base_file_path,num_base_peps,num_peps_per_base,min
     batch_converter = alphabet.get_batch_converter()
     model.eval()
     do_have_GPU = torch.cuda.is_available()
-    # do_have_GPU = False
     if do_have_GPU:
         model.cuda()
     # -- 生成算法部分 --
