@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'model_computing',
     'generate_by_gaussian',
     'filter_by_clip',
 ]
