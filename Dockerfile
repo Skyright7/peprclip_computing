@@ -11,6 +11,9 @@ WORKDIR /app
 ## 将当前目录下的文件复制到容器中的/app
 #COPY . /app
 
+# 复制 entrypoint.sh 到容器中
+COPY ./entrypoint.sh /entrypoint.sh
+
 ## 将requirements复制到容器中的/app
 COPY ./requirements.txt /app
 
@@ -20,5 +23,8 @@ RUN pip install -r requirements.txt
 # 暴露端口8000
 EXPOSE 8000
 
-# 运行Django服务器
-CMD ["python3", "/app/manage.py", "runserver", "0.0.0.0:8000"]
+## 运行Django服务器
+#CMD ["python3", "/app/manage.py", "runserver", "0.0.0.0:8000"]
+
+# 使 entrypoint.sh 作为容器的入口点
+CMD ["/entrypoint.sh"]
