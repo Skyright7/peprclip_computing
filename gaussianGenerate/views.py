@@ -19,7 +19,7 @@ class gaussianTaskListViewset(viewsets.ModelViewSet):
     search_fields = ['taskName']
 
     @action(detail=True)
-    def do_generate_gaussian(self,request,pk=None):
+    def doGenerate(self,request,pk=None):
         current_task_list = gaussianGenerateTaskList.objects.get(pk=pk)
         task_name = current_task_list.taskName
         data_path = current_task_list.dataPath

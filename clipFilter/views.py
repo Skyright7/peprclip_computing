@@ -22,7 +22,7 @@ class ClipViewset(viewsets.ModelViewSet):
     search_fields = ['taskName']
 
     @action(detail=True)
-    def do_generate_gaussian(self,request,pk=None):
+    def doClip(self,request,pk=None):
         current_task_list = clipTaskList.objects.get(pk=pk)
         taskName = current_task_list.taskName
         peptidesPath = current_task_list.peptidesPath
