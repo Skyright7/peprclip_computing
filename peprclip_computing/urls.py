@@ -17,14 +17,10 @@ from django.urls import path
 from django.urls import include
 
 from rest_framework.routers import DefaultRouter
-from generate_by_gaussian.views import task_List_viewset
-from filter_by_clip.views import Clip_List_viewset
 from clipFilter.views import ClipViewset
 from gaussianGenerate.views import gaussianTaskListViewset
 
 router = DefaultRouter()
-router.register(r'generate_by_gaussian', task_List_viewset)
-router.register(r'filter_by_clip', Clip_List_viewset)
 router.register(r'clipFilter', ClipViewset)
 router.register(r'gaussianGenerate', gaussianTaskListViewset)
 
