@@ -237,7 +237,7 @@ class MiniCLIP(pl.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
 
 modelWeightPath = './model_weight/clip/canonical_pepprclip_4-22-23.ckpt'
-output_base_path = './data/clipOut'
+output_base_path = './data/clipOutput'
 
 def peptide_encoding_preparation(generated_peptides_path,model, alphabet,batch_converter,do_have_GPU):
     de_novo_peptides_df = pd.read_csv(generated_peptides_path)

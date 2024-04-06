@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'generate_by_gaussian',
     'filter_by_clip',
     'clipFilter',
+    'gaussianGenerate',
 ]
 
 MIDDLEWARE = [
