@@ -141,3 +141,7 @@ dmypy.json
 cython_debug/
 
 /.idea
+
+/esm_weight/checkpoints/esm2_t33_650M_UR50D.pt
+
+esm2_t33_650M_UR50D.pt
